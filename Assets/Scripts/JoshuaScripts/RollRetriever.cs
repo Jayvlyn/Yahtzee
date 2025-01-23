@@ -18,6 +18,7 @@ public class RollRetriever : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //query the direction vectors
         directions[(int)JDirection.up] = gameObject.transform.up;
         directions[(int)JDirection.down] = -gameObject.transform.up;
         directions[(int)JDirection.right] = gameObject.transform.right;
@@ -26,12 +27,16 @@ public class RollRetriever : MonoBehaviour
         directions[(int)JDirection.backward] = -gameObject.transform.forward;
         Vector3 up = new Vector3(0,1,0);
         float[] outputs = new float[6];
+        //dot product the direction vectors
         for (int i = 0; i < 6; i++)
         {
             outputs[i] = Vector3.Dot(up, directions[i]);
         }
+
+        //extrapolate JDirection of side facing up
         var output = (JDirection)System.Array.IndexOf(outputs, outputs.Max());
         CurrentUpFace = output.ToString();
+        //convert JDirection to number value
         outputNumber = getValue(output);
     }
 
@@ -42,6 +47,7 @@ public class RollRetriever : MonoBehaviour
 
     private int getValue(JDirection direction)
     {
+        //opposite sides should add up to 7
         switch (direction)
         {
             case JDirection.up:
