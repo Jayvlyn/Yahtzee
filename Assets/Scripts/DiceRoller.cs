@@ -2,21 +2,24 @@ using UnityEngine;
 
 public class DiceRoller : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] RollRetriever rollRetriever;
+    [SerializeField] Transform StartSpot;
+    [SerializeField] Rigidbody rb;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    int DiceSideUp()
+    public void RollDice()
     {
-        
-        return 0;
+        transform.position = StartSpot.position;
+        transform.rotation = Random.rotation;
+        rb.angularVelocity = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+        rb.linearVelocity = new Vector3(Random.Range(-3, 3), Random.Range(3, 15), Random.Range(-3, 3));
     }
 }
