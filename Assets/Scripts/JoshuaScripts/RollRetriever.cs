@@ -6,6 +6,7 @@ public class RollRetriever : MonoBehaviour
     GameObject parent;
     Vector3[] directions;
     [SerializeField] string CurrentUpFace;
+    [SerializeField] int outputNumber;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,10 +32,37 @@ public class RollRetriever : MonoBehaviour
         }
         var output = (JDirection)System.Array.IndexOf(outputs, outputs.Max());
         CurrentUpFace = output.ToString();
+        outputNumber = getValue(output);
     }
 
     public enum JDirection
     {
         up, down, right, left, forward, backward
+    }
+
+    private int getValue(JDirection direction)
+    {
+        switch (direction)
+        {
+            case JDirection.up:
+                return 1;
+                break;
+            case JDirection.down:
+                return 6;
+                break;
+            case JDirection.right:
+                return 2;
+                break;
+            case JDirection.left:
+                return 5;
+                break;
+            case JDirection.forward:
+                return 3;
+                break;
+            case JDirection.backward:
+                return 4;
+                break;
+        }
+        return 0;
     }
 }
