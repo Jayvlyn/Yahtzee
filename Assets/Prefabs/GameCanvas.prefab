@@ -2152,6 +2152,7 @@ GameObject:
   - component: {fileID: 6744155630619197474}
   - component: {fileID: 3434561180661473921}
   - component: {fileID: 4703748441362467155}
+  - component: {fileID: 5977924397278994242}
   m_Layer: 5
   m_Name: Scorecard
   m_TagString: Untagged
@@ -2228,6 +2229,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f899065024da14fb0d79654aacfde2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5977924397278994242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4042377802163796081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78237f417f698545ac84d0dbfc6ba81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acesBtnText: {fileID: 3433056364380210430}
+  twosBtnText: {fileID: 7859210530339848349}
+  threesBtnText: {fileID: 6246417013981046765}
+  foursBtnText: {fileID: 2443378210399441356}
+  fivesBtnText: {fileID: 5331420545116039799}
+  sixesBtnText: {fileID: 27324854317063561}
+  threeKindBtnText: {fileID: 105012731160307542}
+  fourKindBtnText: {fileID: 4788210872187817133}
+  fullHouseBtnText: {fileID: 4303373650188489069}
+  smStraightBtnText: {fileID: 3926897155821295856}
+  lgStraightBtnText: {fileID: 710566812529550248}
+  yahtzeeBtnText: {fileID: 3067557082104694090}
+  chanceBtnText: {fileID: 7095950464046790200}
 --- !u!1 &4320775430154668149
 GameObject:
   m_ObjectHideFlags: 0
