@@ -21,6 +21,7 @@ public class ScoreCardUpdater : MonoBehaviour
 	public TMP_Text upperPreBonusTotalText;
 	public TMP_Text upperBonusText;
 	public TMP_Text upperTotalText;
+	public TMP_Text upperTotalText2;
 
 	// lower
 	public TMP_Text threeKindBtnText;
@@ -49,7 +50,7 @@ public class ScoreCardUpdater : MonoBehaviour
 		UpdateScore(upperPreBonusTotalText, currentPlayer.upperPreBonusTotal);
 		UpdateScore(upperBonusText, currentPlayer.upperBonus);
 		UpdateScore(upperTotalText, currentPlayer.upperTotal);
-
+		UpdateScore(upperTotalText2, currentPlayer.upperTotal);
 
 		// Lower Scores
 		UpdateScore(threeKindBtnText, currentPlayer.threeKindScore);
