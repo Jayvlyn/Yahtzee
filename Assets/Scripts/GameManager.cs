@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour
 		CurrentTurn++;
 
 		UpdateUI();
+
+		Manager.i.Init();
 	}
 
 	private void UpdateUI()

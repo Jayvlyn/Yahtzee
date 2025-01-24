@@ -1,16 +1,18 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
-    [SerializeField] DiceRoller[] dice;
-    private int dieCount;
-    protected DiceRoller[] selectedDice;
+    [SerializeField] List<DiceRoller> dice;
+    protected List<DiceRoller> selectedDice;
+
+    public static Manager i;
 
     void Start()
     {
-        selectedDice = dice;
-        dieCount = selectedDice.Length;
+        i = this;
+        Init();
     }
 
     void Update()
@@ -19,24 +21,38 @@ public class Manager : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            DiceRoller die;
 
             if (Physics.Raycast(ray, out hit, 100))
             {
-                Debug.Log(hit.transform.gameObject.name);
-                die = hit.collider.gameObject.GetComponent<DiceRoller>();
-                if (die != null && !selectedDice.Contains(die)) { selectedDice[dieCount] = die; dieCount++; }
+                //Debug.Log(hit.transform.gameObject.name);
+                if(hit.collider.gameObject.TryGetComponent(out DiceRoller die))
+                {
+                    if (selectedDice.Contains(die)) // Already in selected dice, deselect
+                    {
+                        selectedDice.Remove(die);
+                    }
+                    else // Not found in selected dice, add to selected dice
+                    {
+						selectedDice.Add(die);
+					}
+
+                }
             }
         }
     }
 
-    public void RollDice()
+	public void Init()
+	{
+		selectedDice = dice;
+	}
+
+	public void RollDice()
     {
-        for (var i = 0; i < dieCount; i++)
+        int startCount = selectedDice.Count - 1;
+        for (int i = startCount; i >= 0; i--)
         {
             selectedDice[i].RollDice();
-            selectedDice[i] = null;
+            selectedDice.Remove(selectedDice[i]);
         }
-        dieCount = 0;
     }
 }
