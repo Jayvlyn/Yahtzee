@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DiceRoller : MonoBehaviour
 {
     [SerializeField] RollRetriever rollRetriever;
-    [SerializeField] Transform StartSpot;
+    public Transform StartSpot;
     [SerializeField] Rigidbody rb;
     [SerializeField] Transform ThrowTarget;
     [SerializeField] float throwForce = 3;
@@ -14,10 +15,11 @@ public class DiceRoller : MonoBehaviour
 
 	public void RollDice()
     {
-        rb.isKinematic = false;
+        rb.mass = 1f;
 
 		diceListIndex = DiceManager.i.dice.IndexOf(this);
-		DiceManager.i.diceRolls[diceListIndex] = -1;
+		DiceManager.i.diceRolls[diceListIndex] = 0;
+        DiceManager.i.UpdateRollResultText();
 
         transform.position = StartSpot.position;
         transform.rotation = Random.rotation;
@@ -42,7 +44,7 @@ public class DiceRoller : MonoBehaviour
             yield return null; // waiting for dice to stop moving
         }
         DiceManager.i.diceRolls[diceListIndex] = rollRetriever.QueryUpFace();
-        yield return new WaitForSeconds(1f);
-        rb.isKinematic = true;
+        DiceManager.i.UpdateRollResultText();
+		rb.mass = 10000;
     }
 }

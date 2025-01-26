@@ -22,7 +22,8 @@ public class ScoreCard : MonoBehaviour
 
         UpdateScoreCardUI();
         ScoreCardUpdater.i.acesBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
-    }
+		GameManager.i.OnTurnEnd();
+	}
 
 	public void OnTwosButtonClicked()
 	{
@@ -31,6 +32,7 @@ public class ScoreCard : MonoBehaviour
 
         UpdateScoreCardUI();
 		ScoreCardUpdater.i.twosBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 	public void OnThreesButtonClicked()
@@ -40,6 +42,7 @@ public class ScoreCard : MonoBehaviour
 
         UpdateScoreCardUI();
 		ScoreCardUpdater.i.threesBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 	public void OnFoursButtonClicked()
@@ -49,6 +52,7 @@ public class ScoreCard : MonoBehaviour
 
         UpdateScoreCardUI();
 		ScoreCardUpdater.i.foursBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 	public void OnFivesButtonClicked()
@@ -58,6 +62,7 @@ public class ScoreCard : MonoBehaviour
 
         UpdateScoreCardUI();
 		ScoreCardUpdater.i.fivesBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 
@@ -68,6 +73,7 @@ public class ScoreCard : MonoBehaviour
         
         UpdateScoreCardUI();
 		ScoreCardUpdater.i.sixesBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 	public void On3KindButtonClicked()
@@ -77,6 +83,7 @@ public class ScoreCard : MonoBehaviour
 
         UpdateScoreCardUI();
 		ScoreCardUpdater.i.threeKindBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 	public void On4KindButtonClicked()
@@ -86,6 +93,7 @@ public class ScoreCard : MonoBehaviour
 
 		UpdateScoreCardUI();
 		ScoreCardUpdater.i.fourKindBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 	public void OnSmStraightButtonClicked()
@@ -96,6 +104,7 @@ public class ScoreCard : MonoBehaviour
 
         UpdateScoreCardUI();
 		ScoreCardUpdater.i.smStraightBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 	public void OnLgStraightButtonClicked()
@@ -106,6 +115,7 @@ public class ScoreCard : MonoBehaviour
 
 		UpdateScoreCardUI();
 		ScoreCardUpdater.i.lgStraightBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 
@@ -117,6 +127,7 @@ public class ScoreCard : MonoBehaviour
 
 		UpdateScoreCardUI();
 		ScoreCardUpdater.i.fullHouseBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 
@@ -128,6 +139,7 @@ public class ScoreCard : MonoBehaviour
 
 		UpdateScoreCardUI();
 		ScoreCardUpdater.i.yahtzeeBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+		GameManager.i.OnTurnEnd();
 	}
 
 
@@ -138,6 +150,7 @@ public class ScoreCard : MonoBehaviour
 
 		UpdateScoreCardUI();
 		ScoreCardUpdater.i.chanceBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
+        GameManager.i.OnTurnEnd();
 	}
 
 	#endregion

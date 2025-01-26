@@ -1,6 +1,7 @@
 using GameEvents;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class DiceManager : MonoBehaviour
@@ -15,7 +16,9 @@ public class DiceManager : MonoBehaviour
 
     [SerializeField] private VoidEvent onRollFinished;
 
-    void Start()
+	[SerializeField] TMP_Text diceResultText;
+
+	void Start()
     {
         i = this;
         Init();
@@ -65,9 +68,22 @@ public class DiceManager : MonoBehaviour
         }
     }
 
+    public void UpdateRollResultText()
+    {
+        string txt = "<mspace=10>  " + diceRolls[0] + "      " + diceRolls[1] + "      " + diceRolls[2] + "      " + diceRolls[3] + "      " + diceRolls[4] + "  <color=#FFFFFF00>."; // transparent font period at end to preserve white space at end of text mesh display
+        txt = txt.Replace("  0  ", "     ");
+        diceResultText.text = txt;
+	}
+
     public void Init()
     {
         selectedDice = new List<DiceRoller>(dice);
+        diceRolls = new int[5];
+        foreach(DiceRoller d in dice)
+        {
+            d.transform.position = new Vector3(1000, 1000, 1000);
+        }
+        UpdateRollResultText();
     }
 
 	public void RollDice()

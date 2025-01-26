@@ -1,4 +1,5 @@
 using GameEvents;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,8 +17,10 @@ public class GameManager : MonoBehaviour
 		get { return currentTurn; }
 		set
 		{
-			if (value >= players.Length) currentTurn = 1;
+			if (value > players.Length) currentTurn = 1;
 			else currentTurn = value;
+
+
 		}
 	}
 
@@ -51,6 +54,13 @@ public class GameManager : MonoBehaviour
 
 	public void OnTurnEnd()
 	{
+		StartCoroutine(TurnSwitchDelay());
+	}
+
+	public IEnumerator TurnSwitchDelay()
+	{
+		yield return new WaitForSeconds(3);
+
 		CurrentTurn++;
 
 		UpdateUI();
