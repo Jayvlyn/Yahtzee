@@ -29,7 +29,6 @@ public class MainMenu : MonoBehaviour
 
 		if (int.TryParse(cleanedInput, out int playerCount))
 		{
-			Debug.Log("Parsed Player Count: " + playerCount);
 			GameManager.i.OnGameStart(playerCount);
 		}
 		else

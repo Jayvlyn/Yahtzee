@@ -3,7 +3,7 @@ using UnityEngine;
 public class Player
 {
     // Upper section
-    public int acesScore = - 1;
+    public int acesScore = -1;
     public int twosScore = -1;
     public int threesScore = -1;
     public int foursScore = -1;
@@ -29,4 +29,7 @@ public class Player
     public int lowerTotal = 0;
 
     public int grandTotal = 0;
+
+    // Helper Vars
+    public bool bonusYahtzeeUnlocked = false;
 }

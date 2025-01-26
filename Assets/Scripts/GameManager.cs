@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
 		UpdateUI();
 
-		Manager.i.Init();
+		DiceManager.i.Init();
 	}
 
 	private void UpdateUI()
