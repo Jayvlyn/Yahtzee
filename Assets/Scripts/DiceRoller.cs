@@ -1,7 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+using System.Drawing;
 using UnityEngine;
+using UnityEngine.UI;
+using Color = UnityEngine.Color;
 
 public class DiceRoller : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class DiceRoller : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] Transform ThrowTarget;
     [SerializeField] float throwForce = 3;
+    [SerializeField] TrailRenderer tr;
+    public Image diceUI;
+
+    public MeshRenderer meshRenderer;
 
     int diceListIndex;
 
@@ -21,7 +26,9 @@ public class DiceRoller : MonoBehaviour
 		DiceManager.i.diceRolls[diceListIndex] = 0;
         DiceManager.i.UpdateRollResultText();
 
+        tr.enabled = false;
         transform.position = StartSpot.position;
+        tr.enabled = true;
         transform.rotation = Random.rotation;
         rb.angularVelocity = new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
         if(ThrowTarget != null )
@@ -47,4 +54,23 @@ public class DiceRoller : MonoBehaviour
         DiceManager.i.UpdateRollResultText();
 		rb.mass = 10000;
     }
+
+    public Color unselectedColor;
+    public Color selectedColor;
+	public void ChangeMaterial(Material mat, bool on = false)
+	{
+		Material[] materials = meshRenderer.materials;
+        materials[0] = mat;
+		meshRenderer.materials = materials;
+
+        if(on)
+		{
+            diceUI.color = selectedColor;
+			
+		}
+        else
+        {
+            diceUI.color = unselectedColor;
+        }
+	}
 }

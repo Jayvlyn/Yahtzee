@@ -7,7 +7,7 @@ using UnityEngine;
 public class DiceManager : MonoBehaviour
 {
     public List<DiceRoller> dice;
-	[SerializeField] protected List<DiceRoller> selectedDice;
+	public List<DiceRoller> selectedDice;
 
     public int[] diceRolls = new int[5];
     public bool rollFinished = false;
@@ -17,6 +17,9 @@ public class DiceManager : MonoBehaviour
     [SerializeField] private VoidEvent onRollFinished;
 
 	[SerializeField] TMP_Text diceResultText;
+
+	public Material defaultMat;
+	public Material highlightedMat;
 
 	void Start()
     {
@@ -39,10 +42,14 @@ public class DiceManager : MonoBehaviour
                     if (selectedDice.Contains(die)) // Already in selected dice, deselect
                     {
                         selectedDice.Remove(die);
+
+                        die.ChangeMaterial(defaultMat);
                     }
                     else // Not found in selected dice, add to selected dice
                     {
 						selectedDice.Add(die);
+
+                        die.ChangeMaterial(highlightedMat, true);
 					}
 
                 }
@@ -92,6 +99,7 @@ public class DiceManager : MonoBehaviour
         for (int i = startCount; i >= 0; i--)
         {
             selectedDice[i].RollDice();
+            selectedDice[i].ChangeMaterial(defaultMat);
             selectedDice.Remove(selectedDice[i]);
         }
     }
