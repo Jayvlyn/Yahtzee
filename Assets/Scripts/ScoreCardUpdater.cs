@@ -38,6 +38,8 @@ public class ScoreCardUpdater : MonoBehaviour
 
 	public void UpdateScoreCard(Player p)
 	{
+		GameManager.i.scoreCardButtonBlocker.SetActive(true);
+
 		CalculateOtherScores(p);
 
 		// Upper Scores

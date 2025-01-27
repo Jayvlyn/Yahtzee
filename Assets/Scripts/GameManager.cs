@@ -1,7 +1,10 @@
 using GameEvents;
 using System.Collections;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +29,35 @@ public class GameManager : MonoBehaviour
 
 	public static int CurrentPlayerIndex => CurrentTurn - 1;
 	public static Player CurrentPlayer => players[CurrentPlayerIndex];
+
+	public GameObject scoreCardButtonBlocker;
+	public Button rollButton;
+	public TMP_Text rollsLeftText;
+	private int rollsLeft = 3;
+	public int RollsLeft
+	{
+		get { return rollsLeft; }
+		set
+		{
+			rollsLeft = value;
+			rollsLeftText.text = "Rolls: " + rollsLeft + "/3";
+			if (rollsLeft <= 0)
+			{
+				rollButton.interactable = false;
+				scoreCardButtonBlocker.SetActive(false);
+			}
+			else if (rollsLeft < 3)
+			{
+				rollButton.interactable = true;
+				scoreCardButtonBlocker.SetActive(false);
+			}
+			else
+			{
+				rollButton.interactable = true;
+				scoreCardButtonBlocker.SetActive(true);
+			}
+		}
+	}
 
 	public IntEvent onTurnUpdate;
 

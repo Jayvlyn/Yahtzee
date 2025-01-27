@@ -34,7 +34,7 @@ public class DiceManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 100))
+            if (Physics.Raycast(ray, out hit, 100) && GameManager.i.RollsLeft > 0)
             {
                 //Debug.Log(hit.transform.gameObject.name);
                 if(hit.collider.gameObject.TryGetComponent(out DiceRoller die))
@@ -42,6 +42,7 @@ public class DiceManager : MonoBehaviour
                     if (selectedDice.Contains(die)) // Already in selected dice, deselect
                     {
                         selectedDice.Remove(die);
+
 
                         die.ChangeMaterial(defaultMat);
                     }
@@ -51,6 +52,15 @@ public class DiceManager : MonoBehaviour
 
                         die.ChangeMaterial(highlightedMat, true);
 					}
+
+                    if(selectedDice.Count < 1)
+                    {
+                        GameManager.i.rollButton.interactable = false;
+                    }
+                    else
+                    {
+                        GameManager.i.rollButton.interactable = true;
+                    }
 
                 }
             }
@@ -84,6 +94,7 @@ public class DiceManager : MonoBehaviour
 
     public void Init()
     {
+        GameManager.i.RollsLeft = 3;
         selectedDice = new List<DiceRoller>(dice);
         diceRolls = new int[5];
         foreach(DiceRoller d in dice)
@@ -95,6 +106,7 @@ public class DiceManager : MonoBehaviour
 
 	public void RollDice()
     {
+       GameManager.i.RollsLeft--;
         int startCount = selectedDice.Count - 1;
         for (int i = startCount; i >= 0; i--)
         {
