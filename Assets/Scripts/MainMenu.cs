@@ -14,8 +14,13 @@ public class MainMenu : MonoBehaviour
     public TMP_Text playerNameInputPrompt;
 
     private int playerCount = 0;
-    
-    public void OnQuit()
+
+	private void Start()
+	{
+		Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
+	}
+
+	public void OnQuit()
     {
         Application.Quit();
     }
@@ -33,6 +38,7 @@ public class MainMenu : MonoBehaviour
     public void OnBack() // Back to main menu
     {
         playerCountScreen.SetActive(false);
+        playerNamesScreen.SetActive(false);
     }
 
     public void OnConfirm()
