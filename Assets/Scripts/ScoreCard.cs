@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
+using System.Collections;
 
 public class ScoreCard : MonoBehaviour
 {
@@ -13,15 +12,14 @@ public class ScoreCard : MonoBehaviour
     // update UI after updating GameManger's CurrentPlayer score.
 
     int[] DiceRolls => DiceManager.i.diceRolls;
-    Player CurrentPlayer => GameManager.CurrentPlayer;
+    Player CurrentPlayer => GameManager.i.CurrentPlayer;
 
-    public void OnOnesButtonClicked()
+	public void OnOnesButtonClicked()
     {
         int points = NumberPoints(1, DiceRolls);
         CurrentPlayer.acesScore = points;
 
         UpdateScoreCardUI();
-        ScoreCardUpdater.i.acesBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -31,7 +29,6 @@ public class ScoreCard : MonoBehaviour
 		CurrentPlayer.twosScore = points;
 
         UpdateScoreCardUI();
-		ScoreCardUpdater.i.twosBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -41,7 +38,6 @@ public class ScoreCard : MonoBehaviour
 		CurrentPlayer.threesScore = points;
 
         UpdateScoreCardUI();
-		ScoreCardUpdater.i.threesBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -51,7 +47,6 @@ public class ScoreCard : MonoBehaviour
 		CurrentPlayer.foursScore = points;
 
         UpdateScoreCardUI();
-		ScoreCardUpdater.i.foursBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -61,7 +56,6 @@ public class ScoreCard : MonoBehaviour
 		CurrentPlayer.fivesScore = points;
 
         UpdateScoreCardUI();
-		ScoreCardUpdater.i.fivesBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -72,7 +66,6 @@ public class ScoreCard : MonoBehaviour
         CurrentPlayer.sixesScore = points;
         
         UpdateScoreCardUI();
-		ScoreCardUpdater.i.sixesBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -82,7 +75,6 @@ public class ScoreCard : MonoBehaviour
         CurrentPlayer.threeKindScore = points;
 
         UpdateScoreCardUI();
-		ScoreCardUpdater.i.threeKindBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -92,7 +84,6 @@ public class ScoreCard : MonoBehaviour
 		CurrentPlayer.fourKindScore = points;
 
 		UpdateScoreCardUI();
-		ScoreCardUpdater.i.fourKindBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -103,7 +94,6 @@ public class ScoreCard : MonoBehaviour
         CurrentPlayer.smStraightScore = points;
 
         UpdateScoreCardUI();
-		ScoreCardUpdater.i.smStraightBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -114,7 +104,6 @@ public class ScoreCard : MonoBehaviour
 		CurrentPlayer.lgStraightScore = points;
 
 		UpdateScoreCardUI();
-		ScoreCardUpdater.i.lgStraightBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -126,7 +115,6 @@ public class ScoreCard : MonoBehaviour
 		CurrentPlayer.fullHouseScore = points;
 
 		UpdateScoreCardUI();
-		ScoreCardUpdater.i.fullHouseBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -138,7 +126,6 @@ public class ScoreCard : MonoBehaviour
 		CurrentPlayer.yahtzeeScore = points;
 
 		UpdateScoreCardUI();
-		ScoreCardUpdater.i.yahtzeeBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
 		GameManager.i.OnTurnEnd();
 	}
 
@@ -149,7 +136,6 @@ public class ScoreCard : MonoBehaviour
 		CurrentPlayer.chanceScore = points;
 
 		UpdateScoreCardUI();
-		ScoreCardUpdater.i.chanceBtnText.gameObject.GetComponentInParent<Button>().enabled = false;
         GameManager.i.OnTurnEnd();
 	}
 
@@ -199,7 +185,7 @@ public class ScoreCard : MonoBehaviour
         if (TwoCount > quantity) quantity = TwoCount;
         if (ThreeCount > quantity) quantity = ThreeCount;
         if (FourCount > quantity) quantity = FourCount;
-        if (FourCount > quantity) quantity = FiveCount;
+        if (FiveCount > quantity) quantity = FiveCount;
         if (SixCount > quantity) quantity = SixCount;
         return quantity;
     }
@@ -309,12 +295,14 @@ public class ScoreCard : MonoBehaviour
     }
 
 
+    public GameObject yahtzeePopup;
     // Method to identify whenever yahtzee is rolled, required for UI popup and counting bonus yahtzees
     public void OnRollFinished()
     {
         if (Yahtzee(DiceRolls))
         {
             // Do yahtzee popup
+            StartCoroutine(DoYahtzeePopup());
 
             if(CurrentPlayer.bonusYahtzeeUnlocked) // Only do yahtzee bonus when player has 50 scored in yahtzee box
             {
@@ -323,4 +311,25 @@ public class ScoreCard : MonoBehaviour
             }
         }
     }
+
+    private IEnumerator DoYahtzeePopup()
+    {
+		yahtzeePopup.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+        yahtzeePopup.SetActive(false);
+		yield return new WaitForSeconds(0.2f);
+		yahtzeePopup.SetActive(true);
+		yield return new WaitForSeconds(0.2f);
+		yahtzeePopup.SetActive(false);
+		yield return new WaitForSeconds(0.2f);
+		yahtzeePopup.SetActive(true);
+		yield return new WaitForSeconds(0.2f);
+		yahtzeePopup.SetActive(false);
+		yield return new WaitForSeconds(0.2f);
+		yahtzeePopup.SetActive(true);
+		yield return new WaitForSeconds(2f);
+		yahtzeePopup.SetActive(false);
+	}
+
+
 }

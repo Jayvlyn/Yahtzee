@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player
 {
+    public string name = "Unnamed";
+
     // Upper section
     public int acesScore = -1;
     public int twosScore = -1;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ScoreCardUpdater : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class ScoreCardUpdater : MonoBehaviour
 	public void UpdateScoreCard(Player p)
 	{
 		GameManager.i.scoreCardButtonBlocker.SetActive(true);
+		GameManager.i.diceButtonBlocker.SetActive(true);
 
 		CalculateOtherScores(p);
 
@@ -108,5 +110,23 @@ public class ScoreCardUpdater : MonoBehaviour
 		if (p.chanceScore > -1) p.lowerTotal += p.chanceScore;
 
 		p.grandTotal = p.lowerTotal + p.upperTotal;
+	}
+
+	public void SwapEnabledButtons(Player p)
+	{
+		// Enabled if score is -1 meaning score slot not filled yet
+		acesBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.acesScore == -1) ? true : false;
+		twosBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.twosScore == -1) ? true : false;
+		threesBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.threesScore == -1) ? true : false;
+		foursBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.foursScore == -1) ? true : false;
+		fivesBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.fivesScore == -1) ? true : false;
+		sixesBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.sixesScore == -1) ? true : false;
+		threeKindBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.threeKindScore == -1) ? true : false;
+		fourKindBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.fourKindScore == -1) ? true : false;
+		smStraightBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.smStraightScore == -1) ? true : false;
+		lgStraightBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.lgStraightScore == -1) ? true : false;
+		fullHouseBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.fullHouseScore == -1) ? true : false;
+		yahtzeeBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.yahtzeeScore == -1) ? true : false;
+		chanceBtnText.gameObject.GetComponentInParent<Button>().interactable = (p.chanceScore == -1) ? true : false;
 	}
 }

@@ -10,7 +10,7 @@ public class DiceManager : MonoBehaviour
 	public List<DiceRoller> selectedDice;
 
     public int[] diceRolls = new int[5];
-    public bool rollFinished = false;
+    public bool rollFinished = true;
 
     public static DiceManager i;
 
@@ -68,20 +68,22 @@ public class DiceManager : MonoBehaviour
 
         if (!rollFinished)
         {
-            bool negOneFound = false;
+            bool zeroFound = false;
             for (int i = 0; i < diceRolls.Length; i++)
             {
-                if (diceRolls[i] == -1)
+                if (diceRolls[i] == 0)
                 {
-                    negOneFound = true;
+                    zeroFound = true;
                     break;
                 }
             }
-            if (!negOneFound)
+            if (!zeroFound)
             {
                 rollFinished = true;
                 onRollFinished.Raise();
-            }
+				GameManager.i.scoreCardButtonBlocker.SetActive(false);
+				GameManager.i.diceButtonBlocker.SetActive(false);
+			}
         }
     }
 
@@ -94,19 +96,28 @@ public class DiceManager : MonoBehaviour
 
     public void Init()
     {
+        rollFinished = true;
+		GameManager.i.scoreCardButtonBlocker.SetActive(true);
+		GameManager.i.diceButtonBlocker.SetActive(true);
+        GameManager.i.rollButton.interactable = true;
         GameManager.i.RollsLeft = 3;
         selectedDice = new List<DiceRoller>(dice);
         diceRolls = new int[5];
         foreach(DiceRoller d in dice)
         {
-            d.transform.position = new Vector3(1000, 1000, 1000);
-        }
+            d.transform.position = new Vector3(-1000, -1000, -1000);
+			d.ChangeMaterial(defaultMat, true);
+		}
         UpdateRollResultText();
-    }
+	}
 
 	public void RollDice()
     {
-       GameManager.i.RollsLeft--;
+        GameManager.i.rollButton.interactable = false;
+		GameManager.i.scoreCardButtonBlocker.SetActive(true);
+		GameManager.i.diceButtonBlocker.SetActive(true);
+		rollFinished = false;
+        GameManager.i.RollsLeft--;
         int startCount = selectedDice.Count - 1;
         for (int i = startCount; i >= 0; i--)
         {

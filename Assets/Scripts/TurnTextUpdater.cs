@@ -5,8 +5,8 @@ public class TurnTextUpdater : MonoBehaviour
 {
     public TMP_Text turnText;
 
-    public void UpdateText(int playerNum)
+    public void UpdateText(string playerName)
     {
-        turnText.text = "Player " + playerNum + "'s Turn";
+        turnText.text = playerName + "'s Turn";
     }
 }

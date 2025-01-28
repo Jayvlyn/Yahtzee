@@ -1,38 +1,50 @@
 using GameEvents;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static Player[] players;
+    public Player[] players;
+	public static List<string> inputNames = new List<string>();
 
     public static GameManager i;
 
 	public static int currentPlayerCount;
 
-	private static int currentTurn = 1;
-	public static int CurrentTurn
+	public int turnsFinished = 0;
+	private int currentTurn = 1;
+	public int CurrentTurn
 	{
 		get { return currentTurn; }
 		set
 		{
-			if (value > players.Length) currentTurn = 1;
+			if (value > players.Length)
+			{
+				currentTurn = 1;
+				turnsFinished++;
+				if(turnsFinished >= 13)
+				{
+					StartCoroutine(OnGameEnd());
+				}
+			}
 			else currentTurn = value;
 
 
 		}
 	}
 
-	public static int CurrentPlayerIndex => CurrentTurn - 1;
-	public static Player CurrentPlayer => players[CurrentPlayerIndex];
+	public int CurrentPlayerIndex => CurrentTurn - 1;
+	public Player CurrentPlayer => players[CurrentPlayerIndex];
 
 	public GameObject scoreCardButtonBlocker;
+	public GameObject diceButtonBlocker;
 	public Button rollButton;
 	public TMP_Text rollsLeftText;
+	public TMP_Text winText;
 	private int rollsLeft = 3;
 	public int RollsLeft
 	{
@@ -44,22 +56,11 @@ public class GameManager : MonoBehaviour
 			if (rollsLeft <= 0)
 			{
 				rollButton.interactable = false;
-				scoreCardButtonBlocker.SetActive(false);
-			}
-			else if (rollsLeft < 3)
-			{
-				rollButton.interactable = true;
-				scoreCardButtonBlocker.SetActive(false);
-			}
-			else
-			{
-				rollButton.interactable = true;
-				scoreCardButtonBlocker.SetActive(true);
 			}
 		}
 	}
 
-	public IntEvent onTurnUpdate;
+	public StringEvent onTurnUpdate;
 
 	private void Start()
 	{
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
 			for(int i = 0; i < currentPlayerCount; i ++)
 			{
 				players[i] = new Player();
+				players[i].name = inputNames[i];
 			}
 
 			CurrentTurn = 1;
@@ -86,6 +88,8 @@ public class GameManager : MonoBehaviour
 
 	public void OnTurnEnd()
 	{
+		scoreCardButtonBlocker.SetActive(true);
+		diceButtonBlocker.SetActive(true);
 		StartCoroutine(TurnSwitchDelay());
 	}
 
@@ -95,6 +99,8 @@ public class GameManager : MonoBehaviour
 
 		CurrentTurn++;
 
+		ScoreCardUpdater.i.SwapEnabledButtons(CurrentPlayer);
+
 		UpdateUI();
 
 		DiceManager.i.Init();
@@ -102,7 +108,26 @@ public class GameManager : MonoBehaviour
 
 	private void UpdateUI()
 	{
-		onTurnUpdate.Raise(CurrentTurn);
+		onTurnUpdate.Raise(CurrentPlayer.name);
 		ScoreCardUpdater.i.UpdateScoreCard(CurrentPlayer);
+	}
+
+	public void OnAbandon()
+	{
+		SceneManager.LoadScene("MainMenu");
+	}
+
+	public IEnumerator OnGameEnd()
+	{
+		yield return new WaitForSeconds(2);
+		Player winner = players[0];
+		foreach(Player p in players)
+		{
+			if (p.grandTotal > winner.grandTotal) winner = p;
+		}
+		winText.text = winner.name + " Wins!";
+		winText.gameObject.SetActive(true);
+		yield return new WaitForSeconds(5);
+		SceneManager.LoadScene("MainMenu");
 	}
 }
