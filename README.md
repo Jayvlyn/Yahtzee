@@ -38,11 +38,12 @@ To play the game, follow these steps:
 ### Playing the Game
 
 1. **Rolling the Dice**
-   - Players take turns rolling the dice. Use the **"Roll"** button to roll all the dice.
+   - Players take turns rolling the dice. Use the **"Roll!"** button to roll all the dice.
 
 2. **Selecting Dice for Reroll**
    - Click on individual dice or their corresponding UI counterparts to mark them for reroll.
-   - Dice marked for reroll will remain active during the next roll.
+   - When a number of dice are marked for reroll, the **"Roll!"** button will once again be available.
+   - Players get two extra rolls per turn to reroll any number of dice.
 
 3. **Scoring**
    - After rolling, select an empty category on the scorecard to assign your score for that turn.
@@ -53,8 +54,8 @@ To play the game, follow these steps:
    - The game continues until all scorecard categories are filled for all players.
 
 5. **Winning the Game**
-   - At the end of the game, the player with the highest total score is declared the winner.
+   - At the end of the game, the player with the highest grand total is declared the winner.
 
 ## Enjoy the Game!
 
-We hope you have fun playing this digital version of Yahtzee! If you encounter any issues, feel free to reach out for support.
+We hope you have fun playing this digital version of Yahtzee!
