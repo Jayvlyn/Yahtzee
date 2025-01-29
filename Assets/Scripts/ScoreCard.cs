@@ -4,8 +4,6 @@ using System.Collections;
 
 public class ScoreCard : MonoBehaviour
 {
-    #region Scorecard UI Methods
-
     // There are 13 clickable buttons on the scorecard. Each one is selected once per game.
 
     // Button should be deactivated with text set. Use ScoreCardUpdater singleton to
@@ -13,6 +11,15 @@ public class ScoreCard : MonoBehaviour
 
     int[] DiceRolls => DiceManager.i.diceRolls;
     Player CurrentPlayer => GameManager.i.CurrentPlayer;
+
+	private void Start()
+	{
+		Test_FullHouse();
+        Test_ThreeOfAKind();
+        Test_Yahtzee();
+	}
+
+    #region Scorecard UI Methods
 
 	public void OnOnesButtonClicked()
     {
@@ -142,7 +149,6 @@ public class ScoreCard : MonoBehaviour
 	#endregion
 
     
-
 	void UpdateScoreCardUI()
     {
 		ScoreCardUpdater.i.UpdateScoreCard(CurrentPlayer);
@@ -331,5 +337,53 @@ public class ScoreCard : MonoBehaviour
 		yahtzeePopup.SetActive(false);
 	}
 
+    /// <summary>
+    /// Tests the 'Yahtzee' function against an array that should pass and shouldn't pass
+    /// </summary>
+    public void Test_Yahtzee()
+    {
+        Debug.Log("Running YAHTZEE Test");
+        int[] diceRolls = { 3, 3, 3, 3, 3 };
+        bool result = Yahtzee(diceRolls); // should return true
 
+        diceRolls = new int[]{ 1, 2, 3, 4, 5 };
+        bool result2 = Yahtzee(diceRolls); // should return false
+
+        string testResult = (result && !result2) ? "Test Passed" : "Test Failed";
+        Debug.Log(testResult);
+    }
+
+
+	/// <summary>
+	/// Tests the 'FullHouse' function against an array that should pass and shouldn't pass
+	/// </summary>
+	public void Test_FullHouse()
+	{
+        Debug.Log("Running FULL HOUSE Test");
+		int[] diceRolls = { 6, 6, 3, 3, 3 };
+		bool result = FullHouse(diceRolls); // should return true
+
+		diceRolls = new int[] { 1, 2, 3, 4, 5 };
+		bool result2 = FullHouse(diceRolls); // should return false
+
+		string testResult = (result && !result2) ? "Test Passed" : "Test Failed";
+		Debug.Log(testResult);
+	}
+
+
+	/// <summary>
+	/// Tests the 'ThreeOfAKind' function against an array that counts and doesn't count
+	/// </summary>
+	public void Test_ThreeOfAKind()
+	{
+        Debug.Log("Running THREE OF A KIND Test");
+		int[] diceRolls = { 6, 2, 3, 3, 3 };
+		int result = ThreeOfAKind(diceRolls); // should return 17 (6+2+3+3+3)
+
+		diceRolls = new int[] { 1, 2, 3, 4, 5 };
+		int result2 = ThreeOfAKind(diceRolls); // should return 0
+
+		string testResult = (result == 17 && result2 == 0) ? "Test Passed" : "Test Failed";
+		Debug.Log(testResult);
+	}
 }
